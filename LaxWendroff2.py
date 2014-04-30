@@ -7,11 +7,15 @@ Created on Mon Apr 28 10:12:38 2014
 from numpy import *
 from sympy import *
 
-p,u=symbols('p,u')
-f=p**0.5
-A = [[-u, f.diff(p)],[-p, -u]]
-Ap=lambdify([u,p],A.diff(p),'numpy')
-Au=lambdify([u,p],A.diff(u),'numpy')
+#p,u=symbols('p,u')
+#f=p**0.5
+#A = matrix([[-u, f.diff(p)],[-p, -u]])
+#Ap=lambdify([u,p],A.diff(p),'numpy')
+#Au=lambdify([u,p],A.diff(u),'numpy')
+#A=array([[lambdify([u, ro], A[0,0], "numpy"), lambdify([u, ro], A[0,1], "numpy")], \
+#              [lambdify([u, ro], A[1,0], "numpy"), lambdify([u, ro], A[1,1], "numpy")]])
+A=array([[lambda u:-u, lambda ro: ro**0.5], [lambda ro: -ro, lambda u:-u]])
+#Au=array([[-1, 0], ])
 dx=.1
 dt=.1
 tmax=1
@@ -40,6 +44,7 @@ for t in range(0,int(tmax/dt)):
     Vx[1:int(1/dx),:]=(V0[2:int(1/dx)+1,:]-V0[0:int(1/dx)-1])/(2*dx)
     Vxx[1:int(1/dx),:]=(V0[2:int(1/dx)+1,:]-2*V0[1:int(1/dx),:]+\
         V0[0:int(1/dx)-1])/(dx**2)
+        
     Vt[1:int(1/dx),:]=dot(A,Vx[t,1:int(1/dx),:])
     
     vect[:,0,0]=Vx[0,:,0]
