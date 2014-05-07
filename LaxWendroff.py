@@ -22,20 +22,7 @@ def esquemalaxwendroff(dx,dy,tmax,dt,RoValorInic,uValorInic,vValorInic,p):
     v[:,:,0]=vValorInic(x,y)
     
     for t in range(0,int(tmax/dt)):
-        dudx[1:int(1/dx),:,t]=(u[2:int(1/dx)+1,:,t]-u[0:int(1/dx)-1,:,t])/(2*dx)
-        dvdy[:,1:int(1/dy),t]=(v[:,2:int(1/dy)+1,t]-v[:,0:int(1/dy)-1,t])/(2*dy)
-        drodx[1:int(1/dx),:,t]=(ro[2:int(1/dx)+1,:,t]-ro[0:int(1/dx)-1,:,t])/(2*dx)
-        drody[:,1:int(1/dy),t]=(ro[:,2:int(1/dy)+1,t]-ro[:,0:int(1/dy)-1,t])/(2*dy)
-        
-        drodt[:,:,t]=-(ro[:,:,t]*dudx[:,:,t]+u[:,:,t]*drodx[:,:,t]+ro[:,:,t]*dvdy[:,:,t]+v[:,:,t]*drody[:,:,t])
-        
-        dvdx[1:int(1/dx),:,t]=(v[2:int(1/dx)+1,:,t]-v[0:int(1/dx)-1,:,t])/(2*dx)
-        dudy[:,1:int(1/dy),t]=(u[:,2:int(1/dy)+1,t]-u[:,0:int(1/dy)-1,t])/(2*dy)
-        d2ud2x[1:int(1/dx),:,t]=(u[2:int(1/dx)+1,:,t]-2*u[1:int(1/dx),:,t]+u[0:int(1/dx)-1,:,t])/(dx**2)
-        d2udxdy[:,1:int(1/dy),t]=(dudx[:,2:int(1/dy)+1,t]-dudx[:,0:int(1/dy)-1,t])/(2*dy)
-        d2pd2x[1:int(1/dx),:,t]=(p[2:int(1/dx)+1,:,t]-2*p[1:int(1/dx),:,t]+p[0:int(1/dx)-1,:,t])/(dx**2)
-        dpdx[1:int(1/dx),:,t]=(p[2:int(1/dx)+1,:,t]-p[0:int(1/dx)-1,:,t])/(2*dx)
-        d2udxdt[:,:,t]=-(u[:,:,t]*d2ud2x[:,:,t]+dudx[:,:,t]**2+v[:,:,t]*d2udxdy[:,:,t]+dudy[:,:,t]*dvdx[:,:,t]+d2pd2x[:,:,t]/ro[:,:,t]-drodx[:,:,t]*dpdx[:,:,t]/(ro[:,:,t]**2))
+       ki:,t]=-(u[:,:,t]*d2ud2x[:,:,t]+dudx[:,:,t]**2+v[:,:,t]*d2udxdy[:,:,t]+dudy[:,:,t]*dvdx[:,:,t]+d2pd2x[:,:,t]/ro[:,:,t]-drodx[:,:,t]*dpdx[:,:,t]/(ro[:,:,t]**2))
         
         d2rodxdt[1:int(1/dx),:,t]=(drodt[2:int(1/dx)+1,:,t]-drodt[0:int(1/dx)-1,:,t])/(2*dx)
         d2rodydt[:,1:int(1/dy),t]=(drodt[:,2:int(1/dy)+1,t]-drodt[:,0:int(1/dy)-1,t])/(2*dy)
