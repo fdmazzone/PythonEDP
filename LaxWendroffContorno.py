@@ -6,19 +6,20 @@ Created on Wed May 14 03:49:56 2014
 """
 import numpy as np
 
-dx=.1
-dt=.1
-tmax=1
-RoValorInic=lambda x:x
-uValorInic=lambda x:x
+dx=.01
+dt=.01
+tmax=2
+RoValorInic=lambda x:x*(x-1)
+uValorInic=lambda x:x*(x-1)
 A=lambda u, ro:np.array([[-u, ro**2], [-ro, -u]])
 Au=lambda u, ro:np.array([[-np.ones(np.shape(ro)), np.zeros(np.shape(ro))], \
 [np.zeros(np.shape(ro)), -np.ones(np.shape(ro))]])
+ContIzq=lambda t: np.array( [np.zeros(np.shape(t)),np.zeros(np.shape(t)) ]).\
+transpose(1,0)
 Aro=lambda u, ro:np.array([[np.zeros(np.shape(ro)), 2*ro], [-np.ones(np.shape(ro)), \
 np.zeros(np.shape(ro))]])
-
-
-
+ContDer=lambda t: np.array( [np.zeros(np.shape(t)),np.zeros(np.shape(t))]).\
+transpose(1,0)
 
 
 
